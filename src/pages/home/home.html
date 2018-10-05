@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+  <ion-card>
+  <ion-slides loop="true" autoplay="3000" pager>
+    <ion-slide *ngFor="let number of [1,2,3,4,5]">
+      <img src="./assets/imgs/{{number}}.jpg" />
+    </ion-slide>
+    
+
+  </ion-slides> 
+</ion-card> 
+<img style="margin-top: 10px;" src="./assets/imgs/5.jpg" />
+<ion-grid>
+  <ion-row>
+  <ion-slides #proSlides >
+      <ion-slide *ngFor="let item of Products">
+        <ion-card no-padding>
+        
+          <img [src] = "item.featured_src"/>
+          <h1 padding center> {{item.title }} </h1>
+          <p center padding [innerHTML] = "item.short_description"> </p>
+
+          <!-- [innerHTML] is used to bind the description so that tag p1 will not displayed on the screen -->
+
+        </ion-card> 
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
+</ion-grid>
+
+<ion-list #List>
+  <ion-item *ngFor="let item of moreItem" text-wrap (click)="openProductPage(item)">
+
+      <ion-thumbnail item-left>
+          <img [src] = "item.featured_src" />
+        </ion-thumbnail>
+
+        <h2> {{ item.title }} </h2>
+
+        <p>
+            <span [innerHTML]="item.short_description.substr(0,50) + '...'"> </span>
+            <span [innerHTML]="item.price_html"> </span>
+          </p>
+
+          <button ion-button icon clear item-right>
+              <ion-icon name="arrow-forward"></ion-icon>
+    
+          </button>
+
+    </ion-item>
+  </ion-list> 
+  
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  
+    </ion-infinite-scroll>
+
+</ion-content>
